@@ -1,3 +1,10 @@
 *~
-*.swp
-*.swo
+.*.swp
+.*.swo
+
+[._]*.s[a-2][a-z]
+[._]s[a-w][a-z]
+*.un~
+Session.vim
+.netrwhist
+*~
