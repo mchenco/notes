@@ -5,7 +5,7 @@ Hyper Text Markup Language Notes
 * indents are important
 
 #different tags
-```
+```HTML
 <!--COMMENT--> -- this is a comment
 <!DOCTYPE> -- defines document type
 <html> -- creates html document
@@ -22,7 +22,6 @@ Hyper Text Markup Language Notes
 ```
 
 #example
-<!DOCTYPE html>
 <head>
 <title> This is the title of my page. </title>
 </head>

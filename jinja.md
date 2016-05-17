@@ -3,6 +3,7 @@
 What is Jinja?
 * Jinja is a template engine for Python
 * It combines both logic and HTML
+* take a look at [my blog] (www.mchen.co/blog) to see Jinja2 used with Flask
 
 #logic is defined by {% ... %}
 ```
