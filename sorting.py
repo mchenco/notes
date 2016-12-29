@@ -101,7 +101,28 @@ def quickSort(lst):
 	same = [x for x in lst if x == pivot]
 	right = [x for x in lst if x > pivot]
 	return quickSort(left) + same + quickSort(right)
-	
+
+#O(n+w)
+'''
+uses a counter array to count the elements that are repeated
+
+'''
+def countingSort(lst):
+	count = [0] * max(lst)
+	#increment counter array
+	for i in range(len(lst)-1):
+		count[lst[i]] += 1
+	#modify count array to include sum
+	for i in range(1, len(count)-1):
+		count[i] = count[i-1] + count[i]
+
+	sorted = [0] * len(lst)
+	#place first element at counted index
+	for i in range(len(lst)-1):
+		sorted[count[lst[i]]] = lst[i]
+		count[lst[i]] -= 1
+	return sorted
+
 
 # def radixSort(lst):
 
@@ -112,19 +133,28 @@ def _swap(lst, indexA, indexB):
 
 '''
 takes CLA as input for testing or supplies default list
+musy specify what sorting algorithm to use as argv[2]
+
+`python3 sorting.py bubble 9 1 3 48 123`
 '''
 def main(argv):
-	if len(sys.argv) > 1:
-		lst = sys.argv[1:]
+	if len(sys.argv) > 2:
+		lst = [int(x) for x in sys.argv[2:]]
 	else:
 		lst = [1,8,6,3,6,8,3,9,0,4,2,6,27,32,10,23,56,21,36,74]
 
-	# print("bubble sort: ", bubbleSort(lst))
-	# print("insertion sort: ", insertionSort(lst))
-	# print("selection sort: ", selectionSort(lst))
-	# print("merge sort: ", mergeSort(lst, 0, len(lst)))
-	print("quick sort: ", quickSort(lst))
-
+	if sys.argv[1] == "bubble":
+		print("bubble sort: ", bubbleSort(lst))
+	if sys.argv[1]  == "insertion":
+		print("insertion sort: ", insertionSort(lst))
+	if sys.argv[1]  == "selection":
+		print("selection sort: ", selectionSort(lst))
+	if sys.argv[1]  == "merge":
+		print("merge sort: ", mergeSort(lst, 0, len(lst)))
+	if sys.argv[1]  == "quick":
+		print("quick sort: ", quickSort(lst))
+	if sys.argv[1] == "counting":
+		print("counting sort: ", countingSort(lst))
 
 if __name__ == "__main__":
 	main(sys.argv)
