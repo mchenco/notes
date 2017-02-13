@@ -1,0 +1,229 @@
+Ask about data structures, types, how much data there is
+
+Test extreme: 0, negative, null, max, min
+Test user error: string? null? negative?
+Test general
+
+Approaches:
+1. Examplify
+2. Pattern Matching
+3. Simplify and Generalize
+4. Base Case and Build
+5. Data Structure Brainstorm
+
+#Arrays and Strings
+
+##1.1
+Implement an algorithm to determine if a string has all unique characters. What if you cannot use additional data structures?
+
+**Input**: String to test if it has unique characters
+**Output**: boolean True if unique characters; false otherwise
+
+- We could use an array of the alphabet and increment each corresponding character as we encounter them in the string. However, this will take an additional data structure.  
+
+- I was thinking of first checking to make sure all letters in a word were unique, however this does not guarantee that the entire string will have unique characters.  
+
+- If we compare one word to each of the rest of the words, this will result in a poorly designed algorithm as it would take O(n^2) time. However, this reminds me of comparison sorting algorithms. The first idea I had with incrementing an alphabet array is similar to counting sort.
+
+- We would have to iterate through the entire string at least once to make sure that all characters are unique, which means the bottom-line time complexity is O(n).
+
+- We can determine the number of characters in the string, if it exceeds 26, then there must be at least 1 non-unique character as per pigeonhole principle.
+
+- We can sort the string by characters, and if there are identical adjacent characters this means that there are 2 repeating characters. This way, we wouldn't have to use an additional data structure. However, comparison sorting algorithms are O(nlogn) at best, and the counting sort solution is only O(n).
+
+- We can convert the string into a set of characters, and then take the length of the set. If the length of the set is equal to the length of the number of characters in the string, then the original string has all unique characters. This would take O(n) time to construct the set and constant time to check lengths.
+
+```python
+
+def unique_string(strng):
+	if stringLength(strng) > 26:
+		return False
+	alpha_arr = [0 for x in range(26)]
+
+	for word in strng:
+		for i in len(word):
+			uni_chr = word(word[i].lower())
+			if alpha_arr[uni_chr] == 0:
+				alpha_arr[uni_chr] += 1
+			else:
+				return False 
+	return True
+
+
+def stringLength(strng):
+	char_ct = 0
+	for word in strng:
+		for i in len(word):
+			char_ct += 1
+	return char_ct
+
+
+```
+
+##1.2
+Implement a function void(char* str) which reverses a null-terminated string.
+
+**Input**: String
+**Output** reverse of the string
+
+- if we split the string into a list of words, we can iterate through the list of words backwards and concatenate it to a new string
+- instead of concatenating, we can use the join function which is faster because it doesnt rewrite the string in memory each call
+
+```python
+def revString(strng):
+	lst = strng.split(" ")
+	reverse = []
+
+	for i in range(len(lst)):
+		word = lst[-1-i]
+		reverse.append(word)
+
+	reversedstrng = " ".join(reverse)
+
+	return reversedstrng
+
+```
+
+##1.3
+Given two strings, write a method to decide if one is a permutation of the other.
+
+**Input**: 2 strings
+**Output**: True if permutation; false otherwise
+
+- if the two strings are permutation, they will have identical characters. We can test each character of string1 to see if it is in string 2.
+- if string1 has n characters and string 2 has m characters, the time complexity is O(n^2), which is not very efficient.
+- we could sort the two strings first and then see if they are identical, and this would take O(nlogn) or O(n) depending on which sorting algorithm to implement
+
+```python
+def permutation(string1, string2):
+	lst1 = string1.split(' ')
+	lst2 = string2.split(" ")
+	quickSort(lst1)
+	quickSort(lst2)
+
+	if lst1 == lst2:
+		return True
+	else:
+		return False
+
+def quickSort(lst):
+	if len(lst) <= 1:
+		return lst
+
+	pivot = lst[len(lst)-1]
+	left = [word for word in lst < pivot]
+	right = [word for word in lst > pivot]
+	same = [word for word in lst == pivot]
+	return quickSort(left) + same + quickSort(right)
+
+```
+
+##1.4
+
+```python
+def replace_space(strng):
+	strng.replace(" ", "%20")
+```
+
+##1.5
+Implement a method to perform basic string compression using the counts of repeated characters. For example, the string 'aabcccccaaa' would become a2b1c5a3. If the "compressed" string would not become smaller than the original string, your method should return the original string.
+
+**input**: string of alphabetical letters
+**output**: compressed version of string, letter followed by number of that letter
+
+Assumptions:
+- no spaces in the string?
+
+- iterate through each character of the string, once we hit a character that is different, we know that we have finished counting the #of characters for each character.
+- create a new string, append the first letter, finish counting, append letter count, repeat until length of the string is complete.
+
+```python
+
+def compression(strng):
+	compressed = []
+	for i in range(len(strng)):
+		char = strng[i]
+		compressed.append(char)
+		itr = i+1
+		ct = 1
+		while char == strng[itr]:
+			ct += 1
+			itr += 1
+		compressed.append(ct)
+
+	compressed_str = "".join(compressed)
+	if len(strng) < compressed_str:
+		return strng
+	else:
+		return compressed_str
+
+```
+
+##1.6
+Given an image repesented by an NxN matrix, where each pixel in the image is 4 bytes, write a method to rotate the image by 90 degrees. Can you do this in place?
+
+
+##1.7
+Write an algorithm such that if an element in a MxN matrix is 0, its entire row and column are set to 0.
+
+**Input**: a matrix
+**Output**: matrix with row/column set to 0 if there is a 0 element
+
+- iterate through the array to find the 0s, and save the indexes as a tuple (row, col) in a list.
+- after saving all the indexes, iterate through the list and clear those indices to 0
+- to clear a row, we can use 2 for-loops
+
+```python
+
+class Coordinate:
+	def __init__(self, xval, yval):
+		self.x = xval
+		self.y = yval
+
+def clear(x,y, ar):
+	largeX, smallX = x, x
+	largeY, smallY = y, y
+	while largeX <= M:
+		ar[largeX][y] = 0
+		largeX += 1
+
+	while smallX >= 0:
+		ar[smallX][y] = 0
+		smallX -= 1
+
+	while largeY <= N:
+		ar[x][largeY] = 0
+		largeY += 1
+
+	while smallY <= 0:
+		ar[x][smallY] = 0
+		smallY -= 1
+
+def iterate(board):
+	M = len(board)
+	N = len(board[0])
+	lst = []
+	for row in range(M):
+		for col in range(N):
+			if board[M][N] == '0':
+				lst.append(Coordinate(M,N))
+
+	for i in range(len(lst)):
+		clear(lst[i].x, lst[i].y, board)
+```
+
+##1.8
+Assume you have a method isSubstring which checks if one word is a substring of another. Given two strings s1 and s2, write code to check if s2 is a rotation of s1 using only one call to isSubstring
+
+**Input**: 2 strings
+**Output**: boolean true if is a rotation, false otherwise
+
+```python
+def is_rotation(s1, s2):
+	s1s1 = s1 + s1
+	if isSubstring(s2, s1s1):
+		return True
+	return False
+```
+
+

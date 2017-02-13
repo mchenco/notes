@@ -1,0 +1,209 @@
+#2.1
+Write code to remove duplicates from an unsorted linked list. [how would you solve this problem if a temporary buffer is not allowed?]
+
+- iterate through the list, tracking each element. If the element appears twice, remove one of the elements. This can be implemented with a hash table and would take O(n) time.
+
+```python
+def remove_dup(linked_node):
+	hashTable = {}
+	prev = None
+	curr = linked_node
+	while curr.getNext() != None:
+		#if there is no existing value
+		if curr.getValue() not in hashTable:
+			hashTable[curr.getValue()] = 1
+		#if the value exists
+		else:
+			prev.setNext(curr.getNext())
+
+		node = node.getNext()
+```
+
+#2.2
+Implement an algorithm to find the kth to last element of a singly linked list
+
+**Input**: k, the index that we are to find
+**Output**: the elem/value of the kth to last node
+
+- We can find the length of the linked list and then subtract k from the length. That is the index that we must return the element.
+
+X X X X (X) X; k=2; length = 6; ind = 4; 
+
+```python
+def findElementAt(llst, k):
+	length = 0
+	while llst.getNext() != None:
+		llst += 1
+		node = node.getNext()
+	ind = length - k
+
+	found = llst
+	for i in range(ind):
+		found = found.getNext()
+	return found.getElement()
+```
+
+#2.3
+Implement an algorithm to delete a node in the middle of a singly linked list, given only access to that node
+
+**Input**: a node in the middle of linked list
+**Output**: a new linked list with it deleted
+
+- We must access the node prior to the TBDNode in order to set the next variable and maintain the list
+- copy data from next nodes, and delete last node
+
+```python
+def deleteNode(node):
+	while node.next != None:
+		node.val = node.next.val
+		if node.next.next == None:
+			node.setNext(None)
+		else:
+			node = node.next
+
+```
+
+#2.4
+Write code to partition a linked list around a value x, such that all nodes less than x come before all nodes greater than or equal to x.
+
+**Input**: a value x that we will partition
+**Output**: a partitioned linked list
+
+- Is basically quickSort without the recursive call to sort the partitions
+- We can create 3 linked lists, one less than, one greater than pivot and one equivalent to. as we iterate through the llst, we add values to each llst. We then merge them together at the end. We would traverse the og linked list once, O(n)
+- can have 3 pointers, pivot, less, more, and insert the nodes where the pointers are
+- the tail pointers are important because we know that we will be merging the lists at the end, and we don't want to waste time-efficiency by having to iterate through to find the end of the list again. Thus, we create it as an instance variable to point to the tail of the list at all times
+
+```python
+def partition(node, pivot):
+	less = Linkedlist()
+	more = Linkedlist()
+	same = Linkedlist()
+	while node.next != None:
+		if node < pivot:
+			less_tail = less.insert(node)
+		elif node == pivot:
+			same_tail = same.insert(node)
+		else:
+			node > pivot:
+			more_tail = more.insert(node)
+		node = node.next
+	less_tail.setNext(same)
+	same_tail.setNext(more)
+	return less
+
+class LinkedList():
+	def __init__(self):
+		self.head = None
+		self.tail = None
+
+	#return tail of list
+	def insert(self, insert_node):
+		if self.head == None:
+			self.head = node
+			self.tail = self.head
+		else:
+			self.tail.next = insert_node
+			self.tail = node.next
+		return self.tail
+```
+
+#2.5
+You have 2 numbers represented by a linked list, where each node contains a single digit. The digits are stored in reverse order (one's digit at head of list). Write a function that adds the 2 numbers and returns the sum as a linked list.
+
+**Input**: 2 linked lists representing numbers
+**Output**: a linked list representing a number that is the sum of the inputted LLs
+
+- What is the type of the value in the LL? String or Int?
+- Is it a singly or doubly linked list?
+
+- iterate through the linked list, concatenating each value into a string. Reversing the string and casting it into an integers yields the number
+ - we can't iterate through the LL backwards if it is singly linked
+ - we CAN reverse the LL first before we iterate through it
+ - we CAN recursively iterate through the LL to get the digits, concatenated as a string. 
+- perform addition of the 2 numbers.
+- place numbers in a linked list by iterating through the number backwards, and placing it into a linked list.
+
+```python
+TEST:
+Input: ll1 = 3 -> 1 -> 7 and ll2 = 2 -> 4 -> 9
+num1 = 317 / temp = 3/ 717 / 713 
+num2 = 249 / temp = 2/ 949 / 942
+sm = 1655 0: -1 / 1: -2 / 2: -3 4: -4
+
+ll3 = 5 -> 5 -> 6 -> 1
+
+def sum_LL(ll1, ll2):
+	num1 = ""
+	num2 = ""
+	ll3 = Linkedlist(None)
+
+	node1 = ll1
+	while node1.next != None:
+		num1 += str(node1.val)
+		node1 = node1.next
+
+	node2 = ll2
+	while node2.next != None:
+		num2 += str(node2.val)
+		node2 = node2.next
+
+	num1 = reverse(num1)
+	num2 = reverse(num2)
+	sm = int(num1) + int(num2)
+
+	node3 = ll3
+	for i in str(sm):
+		ll3.insert(int(sm[-(i+1)]))
+
+	return ll3
+
+def reverse(strng):
+	for i in range(len(strng)//2):
+		temp = strng[i]
+		strng[i] = strng[-(i+1)]
+		strng[-(i+1)] = temp
+	return strng
+
+```
+
+#2.6
+Given a circular linked list, implement an algorithm which returns the node at the beginning of the loop.
+
+- is every item in the LL unique?
+
+**Input**: a circular LL
+**Output**: the node at beginning of the loop
+
+- iterate through the linked list, remembering each node by:
+ - adding the node's value to a hash table? 
+- if we hit a node which we hit before, return that node
+
+```python
+def circular_head(ll):
+	node = ll
+	dictionary = {}
+	while node.next != None:
+		if dictionary[node.val] == None:
+			dictionary[node.val] = 1
+		else:
+			return node
+		node = node.next
+```
+
+
+#2.7
+Implement a function to check if a Linked List is a palindrome.
+
+Assumptions:
+- Doubly or singly linked list?
+
+- a palindrome is the same backwards and forwards
+- we replicate the LL backwards and compare the two
+- if they are identical, they are palindromes
+
+- use a stack and push the first half of the LL onto it
+- as we iterate through the next half, we compare it to the objects we popped
+
+
+

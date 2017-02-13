@@ -1,0 +1,16 @@
+#Recursion and Dynamic Programming
+
+#9.1
+A child is running up a staircase with n steps, and can hop either 1 step, 2 steps, or 3 steps at a time. Implement a method to count how many possible ways the child can run up the stairs.
+
+- with n stairs, and 1-step, there's 1 way
+ - if odd, there's 2 ways
+ - if even, there's 
+
+#9.2
+Imagine a robot sitting on the upper left corner of an X by Y grid. The robot can only move in 2 directions, right and down. How many possible paths are there for the robot to go from (0,0) to (X,Y)?
+
+#9.4
+Write a method to return all subsets of a set.
+
+- 

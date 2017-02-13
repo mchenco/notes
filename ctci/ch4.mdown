@@ -1,0 +1,180 @@
+#trees and graphs
+
+Assumptions:
+- binary tree vs BST
+- balanced vs unbalanced
+- full/proper?
+
+DFS (use stack)
+
+```python
+def DFS(root):
+	if root == None:
+		return
+
+	stack = Stack()
+
+	root.setMark("VISITED")
+	stack.push(root)
+	for vertex in root.adjacent():
+		if vertex.getMark() != "VISITED":
+			DFS(vertex)
+```
+
+BFS 
+
+```python
+def BFS(root):
+	queue = Queue()
+
+	root.setMark("VISITED")
+	queue.enqueue(root)
+
+	while (!queue.isEmpty()):
+		node = queue.dequeue()
+		for vertex in node.adjacent():
+			if node.getMark() != "VISITED":
+				node.setMark("VISITED")
+				queue.enqueue(node)
+
+```
+
+#4.1
+Implement a function to check if a binary tree is balanced. If the heights of the 2 subtrees of any node never differ by more than one.
+
+**Input**: root of a tree
+**Output**: boolean true if balanced; false otherwise
+
+- We can use recursion to determine the height of the left and right subtrees. 
+- If the subtrees have heights that differ by more than one, return false
+
+```python
+def getHeight(root):
+	if root == None:
+		return -1
+
+	return max(getHeight(root.left), getHeight(root.right)) + 1
+
+def balanceCheck(root):
+	if root == None:
+		return true
+
+	heightDiff = getHeight(root.left) - getHeight(root.right)
+
+	if abs(heightDiff) > 1:
+		return False
+	else:
+		return balanceCheck(root.left) && balanceCheck(root.right)
+
+```
+
+#4.2
+Given a directed graph, design an algorithm to find out whether there is a route between two nodes.
+
+**Input**: Graph, node1, node2
+**Output**: path connecting node1 and node2
+
+- We need to create a path to connect node1 and node2, which can be done using DFS. If we were finding the shortest path, we would use BFS. BFS does better when there are less nodes. DFS does better when there are less edges.
+
+```python
+def DFS(node1, node2):
+	stack = Stack()
+
+	#base case:
+	if node1 == None:
+		return
+
+	#if found
+	if node1 == node2:
+		return true
+
+	node1.setMark("VISITED")
+	stack.push(node1)
+
+	for vertex in node1.adjacent():
+		if vertex.getMark() != "VISITED":
+			DFS(vertex, node2)
+```
+
+
+##4.3
+Given a sorted array with unique integer elements, write an algorithm to create a BST with minimal height.
+
+- A BST with minimal height is balanced —— each subtree's heights do not differ by more than 1
+- the value at the middle of the array should be the root of the BST
+- root.left should be the middle value of the left sub-array
+
+- Reminiscent of binary search — We should iterate through the array like binarysearch and insert those values into the BST in order to obtain a balanced BST with minimal height
+
+- Time complexity of O(n)
+
+```python
+def createBST(array):
+	if len(array) < 1:
+		return None
+
+	mid = len(array) // 2
+	insert_node = Node(array[mid])
+	BST.insert(insert_node)
+
+	createBST(array[:mid-1])
+	createBST(array[mid+1:])
+```
+
+#4.4
+Given a binary tree, design an algorithm which creates a linked list of all the nodes at each depth.
+
+**input**: binary tree
+**output**: linked list of the nodes at each depth.
+
+- we must see all the nodes at one level and add them to the linked list
+- the root will have a linked list of just 1 node (the root)
+- we perform a breadth first search of the binary tree, where we visit one node, then its 2 children, before visiting the children's children
+- we would have to use some data structure to hold all the linked lists, such as an array
+
+```python
+
+def depth_ll():
+	lsts = []
+	q = Queue()
+
+	q.enqueue(root)
+
+	while not q.isEmpty():
+		node = q.dequeue()
+
+
+```
+
+
+#4.5
+Write an algorithm to check if a binary tree is a BST.
+
+- A BST has properties where the left child must be smaller than the root and the right child must be larger
+- to check if a binary tree is a BST, we compare the left child to the root, and the right child to the root to make sure it preserves the properties.
+
+```python
+def isBST(root, min, max):
+	if root == None:
+		return True
+
+	if not checkBST(root.left, min, root.val) or checkBST(root.right, root.val, max):
+		return Fals
+
+	return True
+```
+
+#4.6
+Write an algorithm to find the next node (successor) of a given node in a BST. Assume that each node has a link to its parent.
+
+- the successor of a node can be in many places:
+ - (if node has a right child) to the immediate right child, then the left-most child
+ - (if node has a left child) to the immediate left child, then the right-most child
+ - (if node is a left child or rightmost child on root's right) node's parent
+ - (if node is rightmost child on left subtree) root
+
+```python
+
+def successor(BST):
+	
+```

@@ -1,0 +1,278 @@
+#Stacks and Queues
+Stack: LIFO ordering, implemented using linked list with pop/push/peek methods
+
+Queue: FIFO ordering, implemented using LL with enqueue/dequeue methods
+
+#3.1
+Describe how you could use a single array to implement 3 stacks.
+
+- Divide the array into 3 equal parts and assign each part to represent a stack. However, each stack is not dynamic and can not grow.
+- have pointers for each start of the stack. As we grow one stack, we shift the elements to the right over
+
+#3.2
+How would you design a stack which, in addition to push and pop, also has a function min which returns the minimum element? Push, pop and min should all operate in O(1) time.
+
+- We could have an instance variable called min that tracks the smallest elememt that gets pushed onto the stack
+- we update this variable if it gets popped off. However, if we pop the min, we have to look through the stack to find the second-smallest variable. This makes the time-complexity exceed O(1) time. 
+- could we implement another data structure to track the minimum elements in order? A BST tree is good at doing this, however this would take a lot of space and the time complexity since we need to traverse the tree to find the min would be O(logn), exceeding O(1).
+- Look at the properties of a stack: we only push/pop at the top of the stack. Min can be located anywhere in the stack. If min is at the top, and we pop it, in that case we no longer know what the min of the stack is.
+- Another data structure could be a stack of mins, and every time a smaller element is found, we push it onto the stack.
+
+```python
+class StackWithMin(Stack):
+
+	def __init__(self):
+		super().__init__()
+		self.minStack = Stack()
+
+	def push(self, val):
+		super().push(val)
+		
+		#add to stack of minimums
+		if val <= minStack.peek():
+			minStack.push(val)
+
+	def pop(self):
+		value = super().pop()
+		#if min is popped, we must remove from minStack
+		if super(),peek() == minStack.peek():
+			minStack.pop()
+		return value
+
+	def min(self):
+		if minStack.isEmpty():
+			raise IndexError("Stack is empty")
+		else:
+			return minStack.peek()
+```
+
+#3.3
+Implement a data structure SetOfStacks that mimics this. It will be composed of several stacks and should create a new stack once the previous one exceed capacity. push() and pop() should behave as if it were identical to a second stack.
+
+- When a stack reaches a threshold, we create a new stack and now push to the new stack. If we're popping and the current stack is empty and it is not the only stack in the set, we move to the previous stack.
+- If we implement this set using a Stack of Stacks, we could push the stack onto the set once it is full, and continue. If we pop to the point that the stack is empty, we pop it from the set.
+- This is better than other datastructures such as an array or linked list because we only need to access the top of the stack AKA the current non-full stack.
+
+- when push: check if top stack is not full, then add. else: create a new stack and push it onto set of stack 
+- when pop: check if top stack is empty, remove empty stack from set.
+
+- Will the user give us the threshold or do we design the threshold?
+
+```python
+
+class SetOfStacks(Stack):
+	def __init__(self):
+		threshold = ?
+		super().__init__()
+
+	def push(self, val):
+		if self.isEmpty():
+			self.push(modStack().push(val))
+		else:
+			#if we do not have space to push the new val on
+			topStack = self.peek()
+			if topStack.length() == threshold:
+				self.push(modStack())
+				topStack = self.peek()
+
+			topStack.push(val)
+
+	def pop(self):
+		if self.isEmpty():
+			raise IndexError("Stack is empty")
+		else:
+			topStack = self.peek()
+			#if the top of the stack is empty
+			if topStack.length() == 0:
+				self.pop()
+				topStack = self.peek()
+
+			value = topStack.pop()
+		return value
+
+class modStack(Stack):
+	def __init__(self):
+		length = 0
+		super().__init__()
+
+	def pop(self):
+		super().pop()
+		length -= 1
+
+	def push(self):
+		super().push()
+		length +=1
+
+	def length(self):
+		return length
+```
+
+#3.4
+Write a Towers of Hanoi program for 3 towers and N disks of different sizes. The goal is to move the blocks to the last pin from the first pin. 
+
+**Input**: N number of disks
+**Output**: disks in ascending order on last peg
+
+- Move the first disk to the last pin. Move the second disk to the middle pin. Move both the first/second disk to the last pin. Move
+
+```python
+
+def hanoi(n, source, helper, target):
+	if n > 0:
+		hanoi(n-1, source, target, helper)
+		if source[0]:
+			disk = source[0].pop()
+		hanoi(n-1, helper, source, target)
+
+```
+
+#3.5
+Implement a MyQueue class which implements a queue using two stacks.
+
+- A queue works by enqueueing things and dequeuing them in FIFO order. You must be able to access the head and the tail in order to enqueue/dequeue.
+- A stack works by popping and pushing things in LIFO order. You are able to just access the tail to pop/push
+
+- In order to implement a queue using 2 stacks, one stack can represent the head to dequeue items while the other stack can represent the tail to dequeue items. The two stacks would have the same elements but reversed.
+- We don't need to reverse all the elements in the stacks, only the first few items of the head/tail portion are important to us. We can implement a threshold, and if the head stack gets too small, we can reverse the stack. This is because the reverse method would be very expensive, and we don't want to call that method upon every push/enqueue.
+
+- In order to pick an appropriate threshold, we must know how many elements would be stored in the DS.
+
+```python
+class MyQueue():
+
+	def __init__(self):
+		head = modStack()
+		tail = modStack()
+		threshold = 10
+
+	def reverse(self):
+
+
+class modStack(Stack):
+	def __init__(self):
+		length = 0
+		super().__init__()
+
+	def pop(self):
+		super().pop()
+		length -= 1
+
+	def push(self):
+		super().push()
+		length +=1
+
+	def length(self):
+		return length
+```
+
+#3.6
+Write a program to sort a stack in ascending order. You may use an additional stack to hold items, but may not copy elements into any other data structure.
+
+- we can only access the top elements in the stack.
+- We can do a modified insertion sort. We pop the first element from s1 and move it to s2. We pop the next element, and if it is smaller than the top, we pop s2 and move it onto s1 until we find the correct spot for the element. we push the elem onto s2 and push the removed elements onto s2 again.
+
+```python
+
+def sort_stack(s1):
+	s2 = Stack()
+	s2.push(s1.pop())
+
+	
+	while not s1.isEmpty():
+		elem = s1.pop()
+		ct = 0
+
+		while elem <= s2.peek() && not s2.isEmpty():
+			s1.push(s2.pop())
+			ct += 1
+			
+		s2.push(elem)
+
+```
+
+#3.7
+An animal shelter holds only dogs and cats and operates in FIFO basis. People must adopt the oldest animals at the shelther or select whether they would prefer dog/cat. Create the data structurs to maintain this system and implement operations such as enqueue, dequeueAny, dequeueDog and dequeueCat. You may use built in LinkedList data structure.
+
+- We can use 3 queues to implements this: one for dog, one for cat, one for general. When we enqueue something, we check it's type (dog/cat) and enqueue to general as well as the specific queue.
+- When we dequeue something specific, we must search the general queue for that and dequeue it as well. 
+
+```python
+class Shelter():
+
+	def __init__(self):
+		dogq = LinkedList()
+		catq = LinkedList()
+		genq = LinkedList()
+
+	def enqueue(self, animal):
+		gen_node = genq
+		while gen_node.next != None:
+			gen_node = gen_node.next
+
+		gen_node.next = animal
+
+		if animal.type == "cat":
+			cat_node = catq
+			while cat_node.next != None:
+				cat_node = cat_node.next
+			cat_node.next = animal
+
+		else:
+			dog_node = dogq
+			while dog_node.next != None:
+				dog_node = dog_node.next
+			dog_node.next = animal
+
+	def dequeueAny(self):
+		animal = genq.val
+		genq = genq.next
+
+		if animal.type == "cat":
+			catq = catq.next
+		else:
+			dogq = dogq.next
+
+		return animal
+
+	def dequeueCat(self):
+		animal = catq
+		catq = catq.next
+
+		gen_curr = genq
+		gen_prev = None
+		while gen_curr != animal:
+			gen_prev = gen_curr
+			gen_curr = gen_curr.next
+
+		gen_prev.next = gen_curr.next
+
+	def dequeueDog(self):
+		animal = dogq
+		dogq = dogq.next
+
+		gen_curr = genq
+		gen_prev = None
+		while gen_curr != animal:
+			gen_prev = gen_curr
+			gen_curr = gen_curr.next
+
+		gen_prev.next = gen_curr.next
+
+class Animal():
+	def __init__(self, input_breed, input_name):
+		self.breed = input_breed
+		self.name = input_name
+
+
+class Dog(Animal):
+	def __init__(self, name):
+		super().__init__("Dog", name)
+
+class Cat(Animal):
+	def __init__(self, name):
+		super().__init__("Cat", name)
+```
+
+
+
+

@@ -1,0 +1,71 @@
+#11.1
+You are given two sroted arrays, A and B, where A has a large enough buffer at the end to hold B. Write a method to merge B into A in sorted order.
+
+- iterate through B, find correct spot for the elem to be in A, shift elements down 1, place elem into A. 
+
+```python
+def merge_arrays(a,b):
+	indexA = len(a) -1
+	indexB = len(b) - 1
+	indexMerge = len(a) + len(b) - 1
+
+	if a[indexA] > b[indexB]:
+		a[indexMerge] = a[indexA]
+		indexMerge -= 1
+		indexA -= 1
+	else:
+		a[indexMerge] = b[indexB]
+		indexMerge -= 1
+		indexB -= 1
+
+	while indexB >= 0:
+		a[indexMerge] = b[indexB]
+		indexB -= 1
+		indexMerge -= 1
+
+```
+
+#11.2
+- sort each string alphabetically, if 2 strings have same alphabetical sorting, they are anagrams. 
+
+#11.3
+Given a sorted array of n integers that has been rotated an unknown number of times, write code to find an element in the array. You may assume that the array was originally sorted in increasing order.
+
+- Compare value to first element
+ - if value is smaller, quicksort from mid to back
+ - if value is larger, quicksort from front to mid
+
+ - find mid of array, compare to first element. If mid < first, pivot is in [first:mid]. If mid > first, pivot is in [mid:last]. Compare value to first and mid. If value < mid, look in first half. Else, look in second half. A modified binary search.
+
+ 10 1 2 3 4 5 6 7 8 9
+ find 3
+ first = 10, mid = 4
+
+- are all elements unique?
+- will the element be in the list?
+
+```python
+def find_in_rotated(value, lst):
+	if not len(lst):
+		return -1
+
+	first = 0
+	last = len(lst) -1
+	mid_index = len(lst)//2
+
+	if mid < lst[first]:
+		if value > lst[first] and value < lst[mid_index]:
+		return find_in_rotated(value, lst[:mid_index-1])
+	elif mid > lst[first]:
+		if value < lst[last] and value > lst[mid_index]:
+		return mid + find_in_rotated(value, lst[mid_index+1:])
+	elif value == lst[mid_index]:
+		return mid_index
+```
+
+#11.7
+Circus towers of hanoi
+
+- What if one person is shorter and heavier? what takes priority?
+- sort by first element, and sort by second element
+

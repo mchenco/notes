@@ -1,0 +1,33 @@
+#Object-Oriented Design
+
+#8.1
+Design the data structures for a generic deck of cards. Explain how you would subclass the data structures to implement blackjack.
+
+```python
+
+class Suit(Enum):
+	CLUB = 0
+	DIAMOND = 1
+	HEART = 2
+	SPADE = 3
+
+	def __init__(self, suit_int):
+		self.value = suit_int
+
+class Card:
+	def __init__(self, num, s):
+		self.number =  num
+		self.suit = Suit(s)
+
+class Deck:
+	def __init__(self):
+		deck = []
+		for num in range(1,13):
+			for suit in range(0,3):
+				Card(num, suit)
+
+
+			
+```
+
+
