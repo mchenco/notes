@@ -1,5 +1,5 @@
-#General
-##Find the most frequent integer in an array
+# General
+## Find the most frequent integer in an array
 - dict[word] = 1
 
 ```python
@@ -22,7 +22,7 @@ def frequent(lst):
 
 ```
 
-##Find pairs in an integer array whose sum is equal to 10 (bonus: do it in linear time)
+## Find pairs in an integer array whose sum is equal to 10 (bonus: do it in linear time)
 **input**: list
 **output**: list of pairs (x,y) whose sum equals 10
 
@@ -52,7 +52,7 @@ def sums_to_ten(lst):
 
 ```
 
-##Given 2 integer arrays, determine of the 2nd array is a rotated version of the 1st array. Ex. Original Array A={1,2,3,5,6,7,8} Rotated Array B={5,6,7,8,1,2,3}
+## Given 2 integer arrays, determine of the 2nd array is a rotated version of the 1st array. Ex. Original Array A={1,2,3,5,6,7,8} Rotated Array B={5,6,7,8,1,2,3}
 
 len(lst1) = 7
 len(lst2) = 7
@@ -78,7 +78,7 @@ def is_rotated(a, b):
 	return False
 ```
 
-##Write fibbonaci iteratively and recursively (bonus: use dynamic programming)
+## Write fibbonaci iteratively and recursively (bonus: use dynamic programming)
 - f(n) = f(n-1) + f(n-2)
 - n >= 0
 
@@ -89,7 +89,7 @@ def fibonacci(n)
 	return fibonacci(n-1) + fibonacci(n-2)
 ```
 
-##Find the only element in an array that only occurs once.
+## Find the only element in an array that only occurs once.
 - map to dictionary, with values
 - O(n)
 
@@ -108,7 +108,7 @@ def single(lst):
 	return singles[0]
 ```
 
-##Find the common elements of 2 int arrays
+## Find the common elements of 2 int arrays
 - brute force: iterate through each array and compare each element in the arrays. O(n^2)
 - Hash table: O(n)
 
@@ -129,7 +129,7 @@ def common_elements(a,b):
 
 ```
 
-##Implement binary search of a sorted array of integers
+## Implement binary search of a sorted array of integers
 - compare the middle element to value
 - recursive compare middle element of subarray
 
@@ -168,7 +168,7 @@ def binarySearch(target, lst):
 
 ```
 
-##Implement binary search in a rotated array (ex. {5,6,7,8,1,2,3})
+## Implement binary search in a rotated array (ex. {5,6,7,8,1,2,3})
 - modified because can't tell where element is after rotation
 - we must find what part of the array the pivot point is in by comparing it to the first element: first half or second half
  - then, binary search on the proper half
@@ -194,7 +194,7 @@ def rotate_binary_search(target, lst):
 
 ```
 
-##Use dynamic programming to find the first X prime numbers
+## Use dynamic programming to find the first X prime numbers
 - sieve of erasthothenes
 - delete each multiple of primes 1-10 in 1-n
 
@@ -211,7 +211,7 @@ def sieve(n):
 
 ```
 
-##Write a function that prints out the binary form of an int
+## Write a function that prints out the binary form of an int
 ##Implement parseInt
 - takes a string (that represents integers) and returns the integer value of the string
 
@@ -225,7 +225,7 @@ def parseInt(strng):
 	return result
 ```
 
-##Implement squareroot function
+## Implement squareroot function
 - squareroot of n is where i*i = n. or n^(0.5)
 
 ```python
@@ -234,7 +234,7 @@ def sqrt(n):
 
 ```
 
-##Implement an exponent function (bonus: now try in log(n) time)
+## Implement an exponent function (bonus: now try in log(n) time)
 - x^3 = x\*x*x
 
 ```python
@@ -245,7 +245,7 @@ def exp(x, n): #x^n
 	return result
 ```
 
-##Write a multiply function that multiples 2 integers without using *
+## Write a multiply function that multiples 2 integers without using *
 - multiplication is repeated addition
 - 5*3 == 15 == 5+5+5
 
@@ -257,7 +257,7 @@ def mult(x,n):
 	return result
 ```
 
-##HARD: Given a function rand5() that returns a random int between 0 and 5, implement rand7()
+## HARD: Given a function rand5() that returns a random int between 0 and 5, implement rand7()
 - use time*time, mod 5
 
 ```python
@@ -266,10 +266,10 @@ def rand7():
 	return time.time() + 
 ```
 
-##HARD: Given a 2D array of 1s and 0s, count the number of "islands of 1s" (e.g. groups of connecting 1s)
+## HARD: Given a 2D array of 1s and 0s, count the number of "islands of 1s" (e.g. groups of connecting 1s)
 
-#Strings
-##Find the first non-repeated character in a String
+# Strings
+## Find the first non-repeated character in a String
 - iterate through the string, adding each chr to a dictionary. if the chr is already not in the dictionary, we return that character
 - strip the string of whitespace
  - does punctuation count?
@@ -291,7 +291,7 @@ def non_repeated(strng):
 				dictionary[char] += 1
 ```
 
-##Reverse a String iteratively and recursively
+## Reverse a String iteratively and recursively
 - iterate through the string from the end, swap first and last characters
 - 
 
@@ -304,7 +304,7 @@ def iterative_reverse(strng):
 	return strng
 ```
 
-##Determine if 2 Strings are anagrams
+## Determine if 2 Strings are anagrams
 - an anagram is a word tha can be made by rearranging the characters in a word
 - to determine if 2 strings are anagrams, we can sort the strings. If the strings are the same, they are anagrams.
 - we can use different sorting algorithms, however something like counting sort can be completed in O(n) time instead of O(nlogn) like quicksort. As well, for counting sort if the lists are the same we can say they are anagrams.
@@ -329,7 +329,7 @@ def counting_sort(strng): #return buckets list
 	return buckets
 ```
 
-##Check if String is a palindrome
+## Check if String is a palindrome
 - a palindrome has same characters forwards and backwards
 - compare first and last characters without whitespace
 
@@ -343,7 +343,7 @@ def is_palindrome(strng):
 	return True
 ```
 
-##Check if a String is composed of all unique characters
+## Check if a String is composed of all unique characters
 - construct a dictionary of characters in string
 - if character is already in the dictionary, return false
 - create a list and set of the string, if the len(list) == len(set) then it is all unique characters
@@ -365,14 +365,14 @@ def is_unique(strng):
 
 ```
 
-##Determine if a String is an int or a double
+## Determine if a String is an int or a double
 - a double has a decimal place
 - an int is a whole number
 - look for a decimal
 
-##HARD: Find the shortest palindrome in a String
+## HARD: Find the shortest palindrome in a String
 
-##HARD: Print all permutations of a String
+## HARD: Print all permutations of a String
 - take each character of a string and add it to all possible permutations of the string before the new character
 - recursively do it until you hit just 1 character
 - a: a
@@ -391,11 +391,11 @@ def permutations(prefix, char):
 
 ```
 
-##HARD: Given a single-line text String and a maximum width value, write the function 'String justify(String text, int maxWidth)' that formats the input text using full-justification, i.e., extra spaces on each line are equally distributed between the words; the first word on each line is flushed left and the last word on each line is flushed right
+## HARD: Given a single-line text String and a maximum width value, write the function 'String justify(String text, int maxWidth)' that formats the input text using full-justification, i.e., extra spaces on each line are equally distributed between the words; the first word on each line is flushed left and the last word on each line is flushed right
 
-#Trees
+# Trees
 
-##Implement a BST with insert and delete functions
+## Implement a BST with insert and delete functions
 - BST: for a node, every element in right subtree is larger than elements in left subtree
 - insert: make sure is inserting in correct position
 - delete: point to remaining subtree
@@ -477,7 +477,7 @@ class BST():
 				parent.setRight(node.left)
 ```
 
-##Print a tree using BFS and DFS
+## Print a tree using BFS and DFS
 - DFS: recursive, goes all the way down one node until it hits Null, then goes to next neighbour
 - BFS: iterative, queue, goes through all the neighbours at one level before going to levels of next neighbour
 
@@ -501,7 +501,7 @@ def BFS_print(root):
 			q.enqueue(root.right)
 ```
 
-##Write a function that determines if a tree is a BST
+## Write a function that determines if a tree is a BST
 - BST has property where elements in left subtree are smaller than root. Elements in right subtree are larger than root. Repeat with all subtrees.
 
 ```python
@@ -517,7 +517,7 @@ def is_BST(root):
 	return False
 ```
 
-##Find the smallest element in a BST
+## Find the smallest element in a BST
 - smallest element is always leftmost child
 
 ```python
@@ -527,7 +527,7 @@ def smallest_BST(root):
 	return root
 ```
 
-##Find the 2nd largest number in a BST
+## Find the 2nd largest number in a BST
 
 ```python
 def nth_largest(root, n):
@@ -539,7 +539,7 @@ def nth_largest(root, n):
 		return root
 	nth_largest(root.left)
 ```
-##Given a binary tree which is a sum tree (child nodes add to parent), write an algorithm to determine whether the tree is a valid sum tree
+## Given a binary tree which is a sum tree (child nodes add to parent), write an algorithm to determine whether the tree is a valid sum tree
 - check if children add up to root
 
 	    7
@@ -565,7 +565,7 @@ def is_sumtree(root):
 	return False
 ```
 
-##Find the distance between 2 nodes in a BST and a normal binary tree
+## Find the distance between 2 nodes in a BST and a normal binary tree
 - from root, find first node
 - from first node, find left node, counting number of nodes we traverse to get there
 
@@ -573,8 +573,8 @@ def is_sumtree(root):
 
 ```
 
-##Print the coordinates of every node in a binary tree, where root is 0,0
-##Print a tree by levels
+## Print the coordinates of every node in a binary tree, where root is 0,0
+## Print a tree by levels
 -level order traversal is BFS
 
 ```python
@@ -594,8 +594,8 @@ Given a tree, verify that it contains a subtree.
 HARD: Find the max distance between 2 nodes in a BST.
 HARD: Construct a BST given the pre-order and in-order traversal Strings
 
-#Stacks, Queues, and Heaps
-##Implement a stack with push and pop functions
+# Stacks, Queues, and Heaps
+## Implement a stack with push and pop functions
 
 ```python
 class Stack():
@@ -615,7 +615,7 @@ class Stack():
 			return self.stack.pop()
 ```
 
-##Implement a queue with queue and dequeue functions
+## Implement a queue with queue and dequeue functions
 
 ```python
 class Queue():
@@ -647,21 +647,21 @@ class Queue():
 		self.queue = node.next
 		return node.val
 ```
-##Find the minimum element in a stack in O(1) time
+## Find the minimum element in a stack in O(1) time
 ##Write a function that sorts a stack (bonus: sort the stack in place without extra memory)
 
-##Implement a binary min heap. Turn it into a binary max heap
+## Implement a binary min heap. Turn it into a binary max heap
 
-##HARD: Implement a queue using 2 stacks
+## HARD: Implement a queue using 2 stacks
 - queue: can remove from beginning and add elements at the end
 - stack: can remove and add from end
 - 
 
 
-#Linked Lists
-##Implement a linked list (with insert and delete functions)
+# Linked Lists
+## Implement a linked list (with insert and delete functions)
 
-##Find the Nth element in a linked list
+## Find the Nth element in a linked list
 3 -> 5 -> (1) -> 4
 
 ```python
@@ -683,7 +683,7 @@ def find_nth(n, head):
 ```
 
 Remove the Nth element of a linked list
-##Check if a linked list has cycles
+## Check if a linked list has cycles
 
 ```python
 def has_cycle(head):
@@ -724,13 +724,13 @@ def cycle_start(head, fast):
 			return fast
 	return None
 ```
-##Given a circular linked list, find the node at the beginning of the loop. Example: A-->B-->C --> D-->E -->C, C is the node that begins the loop
+## Given a circular linked list, find the node at the beginning of the loop. Example: A-->B-->C --> D-->E -->C, C is the node that begins the loop
 ##Check whether a link list is a palindrome
 - use a stack, fast and slow runner
 - iterate through LL, pushing elements onto the stack until the fast hits end of list
 - when fast hits end of list, begin popping elements off the stack and checking if they are the same as the second half of lL
 
-##Reverse a linked list iteratively and recursively
+## Reverse a linked list iteratively and recursively
 NULL <- 3 <- 5 <- 1 <-NULL
 
 ```python
@@ -759,7 +759,7 @@ def reverse_recur(head):
 
 	return rev_list
 ```
-#Sorting
+# Sorting
 Implement bubble sort
 Implement selection sort
 Implement insertion sort
